@@ -1,0 +1,187 @@
+<!-- <!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Models - NIDS</title>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/9eab89dd1b.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+
+    Navigation 
+    <div class="navbar">
+        
+         <h2 class="logo"><i class="fa-solid fa-hexagon-nodes-bolt"></i> NIDS </h2>
+        <div>
+            <i class="fa-solid fa-house"></i> <a href="{{ url_for('home') }}">Home</a>
+            <i class="fa-solid fa-layer-group"></i> <a href="{{ url_for('about') }}">About</a>
+            <i class="fa-solid fa-clipboard-list"></i> <a href="{{ url_for('models') }}">Models</a>
+        </div>
+    </div>
+
+    <div class="container">
+        <h1 class="home-header">ML Model Metrics</h1>
+
+       
+        <div class="models-section">
+            <label for="metric">Select a Metric:</label>
+            <select id="metric" onchange="updateGraph()">
+                <option value="accuracy">Accuracy</option>
+                <option value="precision">Precision</option>
+                <option value="recall">Recall</option>
+                <option value="f1_score">F1 Score</option>
+            </select>
+        </div>
+
+        
+        <div class="graph-container">
+            <canvas id="metricsChart"></canvas>
+        </div>
+
+        
+        <h2 class="home-header">Dataset Preview</h2>
+        <div class="models-section">
+            <label for="dataset">Select a Dataset:</label>
+            <select id="dataset" onchange="updateDataset()">
+                <option value="KDDCUP99">KDDCUP99</option>
+                <option value="NSL-KDD">NSL-KDD</option>
+                <option value="UNSW-NB15">UNSW-NB15</option>
+            </select>
+        </div>
+
+        
+        <div class="table-container">
+            <table id="dataTable">
+                <thead>
+                    <tr>
+                        <th>ID</th>
+                        <th>Protocol</th>
+                        <th>Service</th>
+                        <th>Flag</th>
+                        <th>Src Bytes</th>
+                        <th>Dst Bytes</th>
+                        <th>Label</th>
+                    </tr>
+                </thead>
+                <tbody>
+                    
+                </tbody>
+            </table>
+        </div>
+    </div>
+
+    <script>
+        function updateGraph() {
+            // JavaScript function to update the graph based on selected metric
+        }
+
+        function updateDataset() {
+            // JavaScript function to update the dataset table
+        }
+    </script>
+
+</body>
+</html> -->
+
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Models - NIDS</title>
+    <!-- <link rel="stylesheet" href="{{ url_for('static', filename='styles.css') }}"> -->
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/styles.css') }}">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://kit.fontawesome.com/9eab89dd1b.js" crossorigin="anonymous"></script>
+
+</head>
+<body>
+    <div class="navbar">
+        <!-- <img src="{{ url_for('static', filename='images/nids logo.png') }}" alt="nids logo" class="logo"> -->
+         <h2 class="logo"><i class="fa-solid fa-hexagon-nodes-bolt"></i> NIDS </h2>
+        <div>
+            <i class="fa-solid fa-house"></i> <a href="{{ url_for('home') }}">Home</a>
+            <i class="fa-solid fa-layer-group"></i> <a href="{{ url_for('about') }}">About</a>
+            <i class="fa-solid fa-clipboard-list"></i> <a href="{{ url_for('models') }}">Models</a>
+        </div>
+    </div>
+    <header>
+        <h1 style="text-align: center;">Machine Learning Models Performance</h1>
+    </header>
+
+    <section class="metrics-section">
+        <h2 >Model Performance Metrics</h2>
+        <label for="metric-select">Select Metric:</label>
+        <select id="metric-select"> 
+            <option value="accuracy">Accuracy</option>
+            <option value="precision">Precision</option>
+            <option value="recall">Recall</option>
+            <option value="f1-score">F1 Score</option>
+        </select>
+        <canvas id="metric-chart"></canvas>
+    </section>
+
+    <section class="dataset-section">
+        <h2>Dataset Viewer</h2>
+        <label for="dataset-select">Select Dataset:</label>
+        <select id="dataset-select">
+            <option value="KDDCUP99">KDDCUP99</option>
+            <option value="NSL-KDD">NSL-KDD</option>
+            <option value="UNSW-NB15">UNSW-NB15</option>
+        </select>
+        <div id="dataset-table"></div>
+    </section>
+
+    <script>
+        const modelMetrics = {
+            'accuracy': [0.89, 0.91, 0.87],
+            'precision': [0.86, 0.88, 0.84],
+            'recall': [0.83, 0.87, 0.81],
+            'f1-score': [0.84, 0.86, 0.82]
+        };
+        const models = ['SVM', 'Decision Tree', 'KNN'];
+        
+        let ctx = document.getElementById('metric-chart').getContext('2d');
+        let metricChart = new Chart(ctx, {
+            type: 'bar',
+            data: {
+                labels: models,
+                datasets: [{
+                    label: 'Accuracy',
+                    data: modelMetrics['accuracy'],
+                    backgroundColor: ['#ff6384', '#36a2eb', '#ffce56']
+                }]
+            },
+            elements: {
+            bar: {
+                barThickness: 20  // Set the bar thickness here (in pixels)
+            }
+        },
+            options: {
+                responsive: true,
+                scales: {
+                    y: { beginAtZero: true }
+                }
+            }
+        });
+
+        $('#metric-select').change(function() {
+            let selectedMetric = $(this).val();
+            metricChart.data.datasets[0].label = selectedMetric.charAt(0).toUpperCase() + selectedMetric.slice(1);
+            metricChart.data.datasets[0].data = modelMetrics[selectedMetric];
+            metricChart.update();
+        });
+
+        $('#dataset-select').change(function() {
+            let dataset = $(this).val();
+            $.get(`/get_dataset?name=${dataset}`, function(data) {
+                $('#dataset-table').html(data);
+            });
+        });
+    </script>
+</body>
+</html>

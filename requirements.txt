@@ -1,0 +1,6 @@
+Flask==3.0.0
+pandas==2.1.1
+matplotlib==3.8.0
+seaborn==0.13.0
+numpy==1.26.0
+chart.js==3.9.1
